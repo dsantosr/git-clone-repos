@@ -1,0 +1,14 @@
+#!/bin/bash
+mkdir meus-repo-git
+cd meus-repo-git
+
+echo Username:
+
+read varname
+
+repos=$(curl -s https://api.github.com/users/{$varname}/repos | awk '/ssh_url/{print $2}' | sed 's/^"//g' | sed 's/",$//g')
+
+for repo in $repos
+do
+	git clone $repo
+done
